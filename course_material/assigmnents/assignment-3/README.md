@@ -1,5 +1,5 @@
-Assignment 3
-============
+Assignment 3 - Your first vue component
+=======================================
 
 Task 3.1
 --------

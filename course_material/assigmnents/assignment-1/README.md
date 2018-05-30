@@ -1,5 +1,5 @@
-Assignment 1
-============
+Assignment 1 - Preparations
+===========================
 
 This assignment is all about making sure you have installed all the pre-requisites for this project.
 
