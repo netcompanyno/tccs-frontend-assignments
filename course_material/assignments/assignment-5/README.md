@@ -1,7 +1,7 @@
 Assignment 5 - Store it!
 ========================
 
-Task 5.1
+Task 5.1 - Store
 --------
 
 The project is growing and we need to be able to handle larger amounts of data in the frontend application. We do this
@@ -61,11 +61,11 @@ sorting from previous assignment.
 Check that the web page looks exactly like it did before adding the store.
 
 
-Task 5.2
+Task 5.2 - Mutations
 --------
 
 Now that we have the store up and running, we want to add functionality to modify it. In Vue this is called **mutating**
-the state. In React/Redux we use reducers and actions, but in Vue we use `mutations` that are defined in the store.
+the state. In React/Redux we call them reducers, but in Vue they are called `mutations`. They are very similar.
 
 The `mutations` are added directly to the `Vuex.Store()` configuration object and contain a map of functions, where the
 key is the name or identifier of the mutation, and the value is a function which takes the `state` and a `payload` as 
@@ -74,7 +74,7 @@ parameters.
 ```
 const store = new Vue.Store({
     state: {}, // initial state
-    mutations: addMyMutations // imported from somewhere else
+    mutations: allMyMutations // imported from somewhere else
 });
 ```
 
@@ -82,11 +82,44 @@ So a mutation function quite simply modifies the `state` with what is in the pay
 add a lot of magic here if you like. However, it's probably best to keep the mutations simple.
 
 **Beware** that you should **NOT** modify the content of the state directly, but rather replace it. For instance if you
-are adding an item to a list, you should make a new list and concat the old one with the new item. This can be done
-simply like this:
+are adding an item to a list, you should make a new list and join the items in the old one with the new item. This can 
+be done simply like this:
 
 ```
 newList = [...oldList, item];
 ```
 This ["spreads"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) the old list
 and joins the items in it with the new item.
+
+Let's create our first mutation. Create the directory `src/store/mutations`. We will add in `index.js` file here to join
+all our mutations in. This will look something like this:
+
+```
+import myFirstMutations from './myFirstMutations';
+
+export default {
+    ...myFirstMutations
+}
+```
+
+`myFirstMutations` would then contain something like this:
+
+```
+export const MY_MUTATION_ID = 'MY_MUTATION_ID';
+
+export default {
+    [MY_MUTATION_ID](state, payload) {
+        state.items = [...state.items, payload]
+    }
+}
+```
+Of course you can add as many mutations you like here, but you should organize the mutations properly and group them by
+component or similar.
+
+Create your own mutation that adds an item the the list of feed items that you have in your state.
+Import the `mutations/index` module to the store.
+
+
+Task 5.3 - Forms
+--------
+
