@@ -123,3 +123,129 @@ Import the `mutations/index` module to the store.
 Task 5.3 - Forms
 --------
 
+In order to mutate the state, we need a form where the user can add new cards to the list.
+
+First we create a new Vue-component `components/feed/CreateListItem.vue`. In the `router/index.js` you will make this 
+the front page for now (i.e. create a new route with `path: '/'` and `CreateListItem` as the component)
+and change the path for the `List` component to `path: '/list'`.
+
+In the `CreateListItem` component we start by building the template. We need to build this step by step so that it is 
+understandable. The simplest of forms, which we will use as a starting point, can be something like this:
+
+```
+<v-form>
+    <v-text-field
+        v-model="message"
+    />
+    <v-btn
+        @click="submit"
+        color="primary"
+    >
+        {{ submitButtonText }}
+    </v-btn>
+</v-form>
+```
+
+Notice that we bind the data property `message` to the the text field with `v-model` and that clicking on the button
+calls the method `submit`. We need to add a default message value and `submit()` property to our Vue component:
+
+```
+export default {
+    name: 'CreateListItem',
+    data() {
+        return {
+            message: '',
+            submitButtonText: 'Publisér',
+        };
+    },
+    methods: {
+        submit() {
+            // TODO submit data
+        }
+    }
+}
+```
+
+Now use what you have learned about Vuetify using `v-container` and `v-flex` and so on to create something like this:
+
+![Assignment results](ordinary-form.png)
+
+Hint: Take a look at the [Form documentation in Vuetify](https://vuetifyjs.com/en/components/forms) to get some
+inspiration.
+
+Task 5.4 - Submitting
+--------
+
+So the form looks good, and we have our basic form structure in the component. Next we need to actually couple the submit
+with the mutation we create earlier.
+
+We need to import `mapMutations` from `vuex` and the mutation identifier we created in task 5.2.
+
+```
+import { mapMutations } from 'vuex';
+import { ADD_FEED_ITEM } from '../../store/mutations/feed';
+```
+
+We use `mapMutations` for mapping our mutation(s) into our local `methods` object:
+
+```
+    methods: {
+        ...mapMutations([ ADD_FEED_ITEM ]),
+        submit() {
+            // TODO submit data
+        }
+    }
+```
+
+This create a local reference to `ADD_FEED_ITEM` in our methods object.
+Then we can call this mutation from the `submit()` function as it is available in `this`, which refers to the component
+object:
+
+```
+    methods: {
+        ...mapMutations([ ADD_FEED_ITEM ]),
+        submit() {
+            this.ADD_FEED_ITEM({image
+                id: Math.floor(Math.random() * 10000),
+                text: this.message,
+                image: this.imageUrl,
+                datetime: moment().unix(),
+            });
+        }
+    }
+```
+
+Now put all this together. You should have all you need to complete the task, but you may find that there are some
+holes that need to be filled along the way...
+
+In the end, when everything works, you can test [this in the browser](http://localhost:8080). Open the application and 
+then open your inspector in Chrome. Navigate to your Vue plugin and specifically the Vuex state:
+
+![State before update](state-before-update-only-3-items.png)
+
+Fill in the form and press your submit button and notice that the state changes:
+
+![State after update](state-after-update-now-4-items.png)
+
+You can also navigate your browser to [`http://localhost:8080/#/list`]() to see that the list has changed! Cool, right?
+
+
+Bonus tasks
+===========
+
+Bonus 5.1
+---------
+
+Dumb forms that accept anything is a dangerous thing, and we don't want that. We should avoid cross site scripting,
+faulty data, etc.
+
+Your task, should you choose to accept it, is to add validation to the form. There are several ways to do this. Again, 
+take a look at the [Form documentation in Vuetify](https://vuetifyjs.com/en/components/forms) to get some inspiration.
+
+I would recommend, if time permits, to try both creating your own validation as described in the link above and also 
+using third party tools like `vuelidate`.
+
+You need to add validation that the message is no longer than a max length, and that both fields are required. Feel free to
+add more validation if you see the need.
+
+![Form with validation errors](form-with-validation-errors.png)
