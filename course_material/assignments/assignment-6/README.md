@@ -32,6 +32,13 @@ Add props for `title` and `icon` to your `Toolbar` component.
 You also need to add the `onClick` function to the local `methods` object, and we'll look at what goes in the function 
 shortly.
 
+Before we proceed you need to add the icons to the web page. We import these from `fonts.googleapis.com` by adding this
+line in the `index.html` somewhere in the `<head></head>`tag:
+
+```
+<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+```
+
 
 Task 6.2 - Add the Toolbar to your pages
 --------
