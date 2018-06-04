@@ -19,7 +19,7 @@ You can now test that clicking the toolbar title in the `http://localhost:8080/#
 do the same as pressing the toolbar icon.
 
 
-Task 7.1 - Dynamic URL in route
+Task 7.2 - Dynamic URL in route
 --------
 
 In our application we want to open a full view of any item in the list when we click on them. For simplicity we will just
@@ -52,7 +52,7 @@ component.
 
 Next we need to use `mapState` to access the items in the state and find the current item based on the id provided in
 the route. The `id` can be accessed directly from the `this.$route.params`, which holds all params for the route. Here
-is the finished computed property for the `item` that can be used in the template.
+is the finished computed property for the `item` that can be used in the template:
 
 ```
   computed: mapState({
@@ -67,19 +67,29 @@ is the finished computed property for the `item` that can be used in the templat
   }),
 ```
 
-The template in `ViewListItem` is very similar to the one in `ListItem.vue` but also add a `Toolbar` on top
+The template in `ViewListItem` is very similar to the one in `ListItem.vue` but you must also add a `Toolbar` on top
 (icon is not needed). You can access values in an object from the template directly, for instance `:image="item.image"`.
 Finish the template and test the route `http://localhost:8080/#/list-item/3`. This should be the result:
 
 ![List item view with dynamic URL](list-item-view-with-dynamic-url.png)
 
-Task 7.2 - Link to a dynamic route
+Task 7.3 - Link to a dynamic route
 --------
 
-TODO
+We need to round this up with the actual link from `ListItem.vue` to `ViewListItem`. In the template we surround the 
+`ListItemCard` with a `router-link`. We could either link using the path `list-item/` concatenated with the id of the 
+item to get something like `:to="list-item/3"`, but a clearer code would be to use an object specifying the name of
+the route and an object of params to go with it:
 
 ```
   <router-link tag="div" :to="{ name: 'ViewListItem', params: { id }}">
     <ListItemCard ... />
   </router-link>
 ```
+
+Where do we get the `id` from? We add it as a prop to `ListItem.vue` and provide that prop in `List.vue`. That's it!
+
+![List items with dynamic URL](feed.png)
+
+Test that clicking on the items in the list directs you to the full page view of the item you clicked. You can also test
+that you can add items and click on these new items in the list as well.
