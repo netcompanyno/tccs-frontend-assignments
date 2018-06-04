@@ -97,3 +97,10 @@ export default (e1, e2) => e2.datetime - e1.datetime;
 
 Import this function as you would `import` any other component and use this on the list in the `feeds` property in 
 `List.vue`.
+
+
+Bonus 4.2
+---------
+
+Use [this example](https://vuetifyjs.com/en/components/cards#example-grids) as inspiration to create another layout for
+`List.vue` using grid instead of a simple list. Play around with Vuetify a bit and discover the ease and beauty of it.
