@@ -93,3 +93,13 @@ Where do we get the `id` from? We add it as a prop to `ListItem.vue` and provide
 
 Test that clicking on the items in the list directs you to the full page view of the item you clicked. You can also test
 that you can add items and click on these new items in the list as well.
+
+
+Bonus tasks
+===========
+
+Bonus 7.1
+---------
+
+There is another way to use Vuetify components with `router-link` that will make task 7.3 even simpler. Can you figure
+it out by reading the [Cards documentation](https://vuetifyjs.com/en/components/cards)?
