@@ -29,10 +29,11 @@ import router from './router'
 ...
 ```
 
-Add an import for Vuetify like this:
+Add an import for Vuetify like this (right after Vue, before App):
 
 ```
 import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css';
 ```
 
 > Notice that components are, as a rule, written with capital letter.
