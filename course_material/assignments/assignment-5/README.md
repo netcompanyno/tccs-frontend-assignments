@@ -203,7 +203,7 @@ object:
     methods: {
         ...mapMutations([ ADD_FEED_ITEM ]),
         submit() {
-            this.ADD_FEED_ITEM({image
+            this.ADD_FEED_ITEM({
                 id: Math.floor(Math.random() * 10000),
                 text: this.message,
                 image: this.imageUrl,
