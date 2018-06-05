@@ -119,7 +119,7 @@ command line, type the following:
 Test that it is available with
 
 ```
-> echo FIREBASE_URL
+> echo $FIREBASE_URL
 https://tccs-frontend-2018.firebaseio.com/feed.json
 ```
 
