@@ -50,9 +50,7 @@ You can now access the state in the `computed` functions like this:
 
 ```
 computed: mapState({
-    feeds: (state) => {
-      return state.feed.items;
-    }
+    feeds: state => state.feed.items,
 })
 ```
 Please feel free to harden this code (there is no guarantee that the `state.feed.items` are defined) and also add the
