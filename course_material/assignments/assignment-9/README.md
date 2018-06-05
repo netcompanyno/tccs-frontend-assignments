@@ -76,7 +76,7 @@ Let's create some more mutations that can actually keep the state of this proces
 ```
 
 `CREATE_NEW_LIST_ITEM_START` sets up our process state booleans `isLoading`, `error` and `created`. We are able to check
-these later in our GUI if we want to display messages to the user (see Bonus 9.1).
+these later in our GUI if we want to display messages to the user (see Bonus tasks).
 
 
 Task 9.3 - Loading from store
@@ -139,8 +139,9 @@ Ok, let's dive into it. Head to `store/actions/feed.js` and replace the `commit(
 `commit(CREATE_NEW_LIST_ITEM_START)`. This mutates the state so that have the value `isLoading = true` and so on in the
 store.
 
-Next we will use a JavaScript function called `fetch()` to interact with the server. `fetch()` takes an URL and a object
-with instructions (the latter is optional, which results in a default `GET` request on the given URL):
+Next we will use a [JavaScript function called `fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
+to interact with the server. `fetch()` takes an URL and an object with instructions (the latter is optional, the default 
+is a plain `GET` request on the given URL):
 
 ```
   createNewListItem({ commit }, feedItem) {
@@ -158,12 +159,104 @@ JavaScript frontend application as it's really easy to take a JavaScript object 
 `JSON.stringigy(feedItem)` does just that. Since we are delivering data to a REST API we need to use `POST` as the
 request method. It's not really relevant to the course that you understand this now if you don't.
 
+Task 9.5 - Getting back what we added
+--------
+
+In order to see that we get a successful saving of the new list item, we create a new action in the same file:
+
+```
+  loadFeedItems({ commit }) {
+    return fetch(process.env.FIREBASE_URL).then((result) => {
+      if (result && result.ok) {
+        return result.json();
+      }
+      return {};
+    }).then((json) => {
+      commit(LOAD_FEED_ITEMS, convertFirebaseItemsToArray(json));
+    });
+  },
+```
+
+Here we do a simple `GET` method `fetch()` on the exact same URL as before. This code introduces a new concept called
+[promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Description).
+The concept is not really difficult once grasped, but may take some time getting used to.
+`fetch()` returns a Promise object. Essentially it is an object that can handle asynchronous operations and tell the
+caller when the results are ready. 
+
+A promise has two main functions, `then()` and `catch()`, which both returns new promises (so promises can be chained).
+`then()` and `catch()` take callback functions as parameters.
+When a promise is *resolved*, the result from that can be accessed passing a callback function to `.then()`.
+If the promise is *rejected* we can handle that with a callback function in `.catch()`.
+
+```
+aPromise
+  .then((result) => {
+    // We have our result
+    console.log(result)
+  })
+  .catch((error) => {
+    // Something went wrong
+  });
+```
+
+Looking at our `loadFeedItems` action we see that we `fetch(FIREBASE_URL)` and get a result object back. We check for
+`ok` and then return the result `result.json()` which takes the JSON string and unpacks it to a JavaScript object.
+
+But wait, where does this return object go? Well `.then()` automatically creates a new promise where the return values
+of the callback is *resolved* for the next promise.
+
+In this new promise we add a new callback for `.then()` which takes the return object from the first promise and there
+we use this JSON object as payload for a `commit` on our `LOAD_FEED_ITEMS` mutation.
+
+Notice then that a `new Promise` and `then` and `catch` all return a promise object, and you won't get the result object
+any other way than through the callback function for `.then()`.
+
+So, to make sure the action `loadFeedItems` is executed, we could make a button that calls a method that dispatches
+the action. However, we want the action to be called each time we open the `List.vue` component. In `List.vue` we add the
+`mapActions` utility to load `LoadFeedItems` into our object and then a special callback function to our `List` object
+where we can call (dispatch) this action:
+
+```
+   methods: {
+     ...mapActions([ 'loadFeedItems' ]),
+     goToCreateListItemPage() {
+       this.$router.push({ name: 'CreateListItem' });
+     },
+   },
+   mounted() {
+    this.loadFeedItems();
+  },
+```
+
+If you test your application now you should see that we load items from Firebase.
 
 
 Bonus tasks
 ===========
 
 Bonus 9.1
+---------
+
+We want to expand the `createNewListItem` action so that we update the states according to the Firebase request progress.
+This is what we have.
+
+```
+  createNewListItem({ commit }, feedItem) {
+    commit(CREATE_NEW_LIST_ITEM_START);
+
+    return fetch(process.env.FIREBASE_URL, {
+      method: 'POST',
+      body: JSON.stringify(feedItem),
+    });
+  },
+```
+
+Now add callbacks to the promise that 
+* commits `CREATE_NEW_LIST_ITEM_SUCCESS` when all was good and pushes `List` to the router,
+* commits `CREATE_NEW_LIST_ITEM_FAILURE` when the promise was rejected and
+* commits `CREATE_NEW_LIST_ITEM_FINISHED` to notify the GUI that the storing completed (even if it failed)
+
+Bonus 9.2
 ---------
 
 Display messages for the states `isLoading`, `error` and `created` in `state.feed` to show the user that something is 
