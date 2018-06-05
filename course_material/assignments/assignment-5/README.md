@@ -10,11 +10,11 @@ by using what's called a **store**.
 The store holds a **state** for the application. In this first task we want to move our data into a store, and we'll see
 about changing the state of the store later.
 
-In out `List.vue` component we have hard coded `feeds()` as a list of items that we display. However, this list may
+In our `List.vue` component we have hard coded `feeds()` as a list of items that we display. However, this list may
 change as items are added, changed or removed.
 
 We need to move this data into a store. In Vue.js the store is handled by Vuex. So first we need to install the `vuex`
-component using `npm`.
+component using `npm` on the command line.
 
 Then you need to create a `store/index.js` in your `src` folder. It should like something like this:
 
