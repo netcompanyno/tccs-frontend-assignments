@@ -29,7 +29,8 @@ From the code above you can see that `v-flex` and `v-card` etc. are all componen
 create your own component that you call `ListItem.vue` which includes a template for the `v-card` and take properties 
 supplied from `List.vue`.
 
-Hint: Take a look on the [guide on how to create components](https://vuejs.org/v2/guide/single-file-components.html).
+Hint: Take a look on the [guide on how to create components](https://vuejs.org/v2/guide/components.html#Passing-Data-to-Child-Components-with-Props)
+We want you to use the [single `.vue` file approach to creating a component](https://vuejs.org/v2/guide/single-file-components.html).
 
 Task 4.2
 --------
