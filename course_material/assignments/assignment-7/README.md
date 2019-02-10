@@ -43,16 +43,14 @@ You should also clean up the rest of the code and remove code that is no longer 
 
 Next we create a new component to be our full screen view of the item. Create the file `components/feed/ViewListItem.vue`.
 
-Before providing content to this file we will add a route to access it. The path may include parameters that we can access
-from the component on run time. You specify what is a parameter in the route by prefixing it with a `:`. 
+Before providing content to this file we will add a route to access it. The path may include parameters that we can access from the component on run time. You specify what is a parameter in the route by prefixing it with a `:`. 
 
-Create a route for `ViewListItem` with the path `/list-item/:id`.
-`/list-item/:id` is called a dynamic URL because it can change but still refer to the same route and be handled by the same
-component.
+Create a route for `ViewListItem` with the path `/list-item/:id`. 
+`/list-item/:id` is called a dynamic URL because it can change but still refer to the same route and be handled by the same component. You should also add `props: true` to the new route, to indicate that the params from the URL should be passed on as props to the component.
 
-Next we need to use `mapState` to access the items in the state and find the current item based on the id provided in
-the route. The `id` can be accessed directly from the `this.$route.params`, which holds all params for the route. Here
-is the finished computed property for the `item` that can be used in the template:
+The template in `ViewListItem` is very similar to the one in `ListItem.vue`, but you should add a new prop: `id`. You must also add a `Toolbar` on top (icon is not needed). You can access values in an object from the template directly, for instance `:image="item.image"`.
+
+Next we need to use `mapState` to access the items in the state and find the current item based on the id provided as a prop. Here is the finished computed property for the `item` that can be used in the template:
 
 ```
   computed: mapState({
@@ -62,13 +60,11 @@ is the finished computed property for the `item` that can be used in the templat
         return {};
       }
       
-      return state.feed.items.find(item => item.id.toString() === this.$route.params.id.toString()) || {};
+      return state.feed.items.find(item => item.id.toString() === this.id.toString()) || {};
     },
   }),
 ```
 
-The template in `ViewListItem` is very similar to the one in `ListItem.vue` but you must also add a `Toolbar` on top
-(icon is not needed). You can access values in an object from the template directly, for instance `:image="item.image"`.
 Finish the template and test the route `http://localhost:8080/#/list-item/3`. This should be the result:
 
 ![List item view with dynamic URL](list-item-view-with-dynamic-url.png)

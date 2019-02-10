@@ -39,8 +39,8 @@ When we have our ListItem component we can import this into our List component.
 
 We do this by adding an `import ListItem from './ListItem.vue';` statement to the top of our `<script>` tag.
 
-Next you must register the component locally (it is not practical to register them globally). You do this by adding them
-to the `components` property:
+Next you must register the component locally (it is usually unnecessary to register them globally). You do this by 
+adding them to the `components` property:
 
 ```
 <script>
@@ -49,9 +49,7 @@ import ListItem from './ListItem';
 export default {
   name: 'List',
   components: { ListItem },
-  computed: {
-    ...
-  }
+  ...
 };
 </script>
 ```
@@ -89,18 +87,24 @@ Bonus tasks
 Bonus 4.1
 ---------
 
-Create your own `listitem-datetime-sorter` utility in a `utils` folder inside src. General utilities can be placed here.
+Create your own `listItemDatetimeSorter` utility in a `utils` folder inside src. General utilities can be placed here.
 In this case is is a sorter function that looks like this:
 
 ```
-export default (e1, e2) => e2.datetime - e1.datetime;
+export default (e1, e2) => e|.datetime - e2.datetime;
 ```
 
 Import this function as you would `import` any other component and use this on the list in the `feeds` property in 
-`List.vue`.
+`List.vue`. Hint: Make a computed property that depends on the feed in the data property.
 
 
 Bonus 4.2
+---------
+
+Have a look at [filter](https://vuejs.org/v2/guide/filters.html). Try solving 4.3 again using a filter instead of a
+computed value.
+
+Bonus 4.3
 ---------
 
 Use [this example](https://vuetifyjs.com/en/components/cards#example-grids) as inspiration to create another layout for

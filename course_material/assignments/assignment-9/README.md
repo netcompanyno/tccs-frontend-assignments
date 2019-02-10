@@ -109,45 +109,32 @@ Task 9.4 - Expanding the action with Firebase!
 
 Finally we are ready to interact with Firebase. We've set up a database there that you will use.
 
-First some setup. We need to set the URL for our Firebase database so that we can use it in our application. On your
-command line, type the following:
+First some setup. We need to set the URL for our Firebase database so that we can use it in our application. Add a file named `.env` in the project root folder with the following content:
 
 ```
-> export FIREBASE_URL='https://tccs-frontend-2018.firebaseio.com/feed.json'
+VUE_APP_FIREBASE_URL=https://tccs-frontend-2018.firebaseio.com/feed.json
 ```
 
-Test that it is available with
+The VUE_APP_ part is required as only variables starting with this will be statically embedded into the client bundle at build time. Also, we can have different .env files:
 
 ```
-> echo $FIREBASE_URL
-https://tccs-frontend-2018.firebaseio.com/feed.json
-```
-
-Next we want to add this environment variable to our application. Edit the `config/dev.env.js` so that it looks like
-this:
-
-```
-const prodEnv = require('./prod.env')
- 
-module.exports = merge(prodEnv, {
-  NODE_ENV: '"development"',
-  FIREBASE_URL: `"${process.env.FIREBASE_URL}"`
-})
+.env                # loaded in all cases
+.env.local          # loaded in all cases, ignored by git
+.env.[mode]         # only loaded in specified mode, e.g. .env.production, .env.test, ...
+.env.[mode].local   # only loaded in specified mode, ignored by git
 ```
 
 Ok, let's dive into it. Head to `store/actions/feed.js` and replace the `commit(ADD_FEED_ITEM)` with 
 `commit(CREATE_NEW_LIST_ITEM_START)`. This mutates the state so that have the value `isLoading = true` and so on in the
 store.
 
-Next we will use a [JavaScript function called `fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
-to interact with the server. `fetch()` takes an URL and an object with instructions (the latter is optional, the default 
-is a plain `GET` request on the given URL):
+Next we will use a [JavaScript function called `fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) to interact with the server. `fetch()` takes an URL and an object with instructions (the latter is optional, the default is a plain `GET` request on the given URL):
 
 ```
   createNewListItem({ commit }, feedItem) {
     commit(CREATE_NEW_LIST_ITEM_START);
 
-    return fetch(process.env.FIREBASE_URL, {
+    return fetch(process.env.VUE_APP_FIREBASE_URL, {
       method: 'POST',
       body: JSON.stringify(feedItem),
     })
@@ -166,7 +153,7 @@ In order to see that we get a successful saving of the new list item, we create 
 
 ```
   loadFeedItems({ commit }) {
-    return fetch(process.env.FIREBASE_URL).then((result) => {
+    return fetch(process.env.VUE_APP_FIREBASE_URL).then((result) => {
       if (result && result.ok) {
         return result.json();
       }
@@ -199,8 +186,7 @@ aPromise
   });
 ```
 
-Looking at our `loadFeedItems` action we see that we `fetch(FIREBASE_URL)` and get a result object back. We check for
-`ok` and then return the result `result.json()` which takes the JSON string and unpacks it to a JavaScript object.
+Looking at our `loadFeedItems` action we see that we `fetch(VUE_APP_FIREBASE_URL)` and get a result object back. We check for `ok` and then return the result `result.json()` which takes the JSON string and unpacks it to a JavaScript object.
 
 But wait, where does this return object go? Well `.then()` automatically creates a new promise where the return values
 of the callback is *resolved* for the next promise.
@@ -212,9 +198,7 @@ Notice then that a `new Promise` and `then` and `catch` all return a promise obj
 any other way than through the callback function for `.then()`.
 
 So, to make sure the action `loadFeedItems` is executed, we could make a button that calls a method that dispatches
-the action. However, we want the action to be called each time we open the `List.vue` component. In `List.vue` we add the
-`mapActions` utility to load `LoadFeedItems` into our object and then a special callback function to our `List` object
-where we can call (dispatch) this action:
+the action. However, we want the action to be called each time we open the `List.vue` component. In `List.vue` we add the `mapActions` utility to load `LoadFeedItems` into our object and then a special callback function to our `List` object where we can call (dispatch) this action:
 
 ```
    methods: {
@@ -237,14 +221,13 @@ Bonus tasks
 Bonus 9.1
 ---------
 
-We want to expand the `createNewListItem` action so that we update the states according to the Firebase request progress.
-This is what we have.
+We want to expand the `createNewListItem` action so that we update the states according to the Firebase request progress. This is what we have.
 
 ```
   createNewListItem({ commit }, feedItem) {
     commit(CREATE_NEW_LIST_ITEM_START);
 
-    return fetch(process.env.FIREBASE_URL, {
+    return fetch(process.env.VUE_APP_FIREBASE_URL, {
       method: 'POST',
       body: JSON.stringify(feedItem),
     });

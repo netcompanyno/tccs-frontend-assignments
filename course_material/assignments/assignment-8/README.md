@@ -27,8 +27,7 @@ Since we've cheated here, we can still make a test that ensures our sorting work
 We are using `jest` as a test framework. All the boiler plate is hidden away and a config file has already been created
 for us. All we need to do is put in some simple tests.
 
-Create the file `unit/utils/listitem-datetime.sorter.test.js` in the `test` folder (not in `src`). The `test/unit` folder
-should mirror the `src` folder so that it's easy to find the test files for a given component/utility.
+Create the file `unit/utils/listitem-datetime.sorter.spec.js` in the `test/unit` folder (not in `src`). The `test/unit` folder should mirror the `src` folder so that it's easy to find the test files for a given component/utility.
 
 First import your `listitem-datetime-sorter` component.
 
@@ -84,7 +83,7 @@ Are you ready to solve the task? Here are some hints:
 To run your test you simply type the following on your command line:
 
 ```
-> npm run test
+> npm run test:unit
 ```
 
 Hopefully you get a `PASS`.
@@ -94,7 +93,7 @@ Task 8.2 - Test mutation
 --------
 
 Well, we won't look at tests that mutate. We will test out mutation `src/store/mutations/feed`. Create the file
-`test/unit/store/mutations/feed.test.js`: 
+`test/unit/store/mutations/feed.spec.js`: 
 
 ```
 import mutations, { ADD_FEED_ITEM } from '../../../../src/store/mutations/feed';
@@ -104,15 +103,13 @@ describe('feed mutations', () => {
 
   it('adds feed item with mutation ADD_FEED_ITEM to array already containing items', () => {
     const state = {
-      feed: {
-        items: [
-          {
-            id: 1,
-            image: 'someImageUrl',
-            text: 'some text',
-          },
-        ],
-      },
+      feed: [
+        {
+          id: 1,
+          image: 'someImageUrl',
+          text: 'some text',
+        },
+      ],
     };
     const secondNewFeedItem = {
       id: 2,
@@ -126,9 +123,7 @@ describe('feed mutations', () => {
 
   it('adds feed item with mutation ADD_FEED_ITEM to array of empty items', () => {
     const state = {
-      feed: {
-        items: [],
-      },
+      feed: [],
     };
     const newFeedItem = {
       id: 1,

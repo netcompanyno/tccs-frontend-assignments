@@ -32,7 +32,7 @@ export default store;
 ```
 
 In the `state` object we can add things we want to be available in the store as a default. Now move the list of items
-from `List.vue` into the state here. Beware that is should not be a function like in the `computed` property of the 
+from `List.vue` into the state here. Beware that it should not be a function like in the `data` property of the 
 components.
 
 To enable have this `store/index.js` being run with the web page we need to add it to the `Vue` configuration.
@@ -49,12 +49,11 @@ import { mapState } from 'vuex';
 You can now access the state in the `computed` functions like this:
 
 ```
-computed: mapState({
-    feeds: state => state.feed.items,
+computed: {
+    ...mapState(['feed']),
 })
 ```
-Please feel free to harden this code (there is no guarantee that the `state.feed.items` are defined) and also add the
-sorting from previous assignment.
+Make sure that the sorting from the previous assignment still works.
 
 Check that the web page looks exactly like it did before adding the store.
 
@@ -77,7 +76,7 @@ const store = new Vue.Store({
 ```
 
 So a mutation function quite simply modifies the `state` with what is in the payload. It's a function so you can also 
-add a lot of magic here if you like. However, it's probably best to keep the mutations simple.
+add a lot of magic here if you like (...but you really shouldn't.)
 
 **Beware** that you should **NOT** modify the content of the state directly, but rather replace it. For instance if you
 are adding an item to a list, you should make a new list and join the items in the old one with the new item. This can 
@@ -225,8 +224,15 @@ Fill in the form and press your submit button and notice that the state changes:
 
 ![State after update](state-after-update-now-4-items.png)
 
-You can also navigate your browser to [`http://localhost:8080/#/list`]() to see that the list has changed! Cool, right?
+You can also add a link to the list view to se the result. Just add the following somewhere in your page: 
 
+```
+<router-link :to="{name: 'List'}">See list</router-link>
+```
+
+
+> Note: It's usually (at least for larger applications) a good idea to avoid committing mutations directly from 
+components, and rather dispatch actions instead. We will revisit this topic in assignment-9.
 
 Bonus tasks
 ===========

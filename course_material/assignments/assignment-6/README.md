@@ -111,3 +111,12 @@ changed to include the new item. Given what you've learned this should be easy t
 The results after submit should then be that you see your new item in the list as soon as you publish your item:
 
 ![The result after publish](new-list-item-appears-after-publishing-list-item.png)
+
+Bonus tasks
+===========
+
+Bonus 6.1
+---------
+Typically we want the toolbar available throughout our whole web application. It would be nice to achieve this without having to explicitly add the toolbar to every view. Can you find a way to do this? Hint: App.vue, add it "outside" the router view.
+
+
