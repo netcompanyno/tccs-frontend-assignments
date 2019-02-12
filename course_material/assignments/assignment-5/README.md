@@ -106,7 +106,7 @@ export const MY_MUTATION_ID = 'MY_MUTATION_ID';
 
 export default {
     [MY_MUTATION_ID](state, payload) {
-        state.items = [...state.items, payload]
+        state.feed = [...state.feed, payload]
     }
 }
 ```
@@ -202,7 +202,7 @@ object:
     methods: {
         ...mapMutations([ ADD_FEED_ITEM ]),
         submit() {
-            this.ADD_FEED_ITEM({
+            this[ADD_FEED_ITEM]({
                 id: Math.floor(Math.random() * 10000),
                 text: this.message,
                 image: this.imageUrl,
