@@ -62,7 +62,7 @@ Task 6.3 - Routing around
 
 Nothing is more sad than buttons that do nothing. Let's make these Toolbar buttons do something.
 
-In the Toolbar we created we have just one button, which is fine for now. In the Toolbar component re don't care what
+In the Toolbar we created we have just one button, which is fine for now. In the Toolbar component we don't care what
 icon it displays and more importantly what the button does. We want the parent component to handle that. This is a very
 important concept when creating common components.
 
