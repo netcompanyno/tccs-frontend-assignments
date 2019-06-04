@@ -59,7 +59,7 @@ content from `HelloWorld.vue` and strip out all the contents of `template`, `scr
     grows, some folders will naturally grow. To be able to keep our sanity we want to group files that belong together 
     in designated folders.
 
-2. In the `src/router/index.js` file you will find the router setup for your project. Notice that `HelloWorld.vue` is
+2. In the `src/router.js` file you will find the router setup for your project. Notice that `HelloWorld.vue` is
 imported and referenced there. Replace both the import and the route definition for the route `/` with the new
 `List.vue` component.
 
