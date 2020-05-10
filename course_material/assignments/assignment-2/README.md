@@ -83,3 +83,33 @@ In order to start your project locally, just run:
 This will start a local web server and a watcher that monitors your project for changes. Open Chrome and the URL given by the web server. You should see the Hello World page.
 
 > You can also access all these tasks, including some other snack, using the Vue UI tool that we just used to create the project. Feel free to explore its features yourself!
+
+Task 2.4
+--------
+
+When you created your project, you configured something called "Linting". This is a beatiful tool that statically analyzes your code to discover prolems. It also helps a team to keep the codestyle within a project consistant. As well as discovering your errors it can even fix some of them for you. 
+
+We can configure ESLint anyway we want by creating our own rules, but usually we go with a preconfigured rule set. In this project we chose a Vue-adapted ESLint config based on the well renowned Airbnb Javascript Style Guide.
+
+Now, try to add an "error" to your code. You can for instance go to `Home.vue` and replace the single quotes (`'`) in the import statement with doble quotes (`"`). If you're using IntelliJ, you should now see a red underline. You can fix it (directly in IntelliJ) by placing your cursor in the marked error, pressing `alt + enter` and selecting `ESLint: Fix 'quotes'`.
+
+Add the same "error" again, but this time you run 
+```
+> npm run lint
+```
+
+Cool, eh?
+
+The Airbnb style guide enforces a maximum line length of 100 characters. Let's increase this to 120 by changing that specific rule. Go to `package.json` and add the following
+```
+...
+"eslintConfig": {
+    ...
+    "rules": {
+      "max-len": ["error", { "code": 120 }]
+    },
+    ...
+}
+...
+```
+You can see all available rules at [https://eslint.org/docs/rules/](https://eslint.org/docs/rules/).
