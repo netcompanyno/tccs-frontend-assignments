@@ -1,255 +1,94 @@
-Assignment 5 - Store it!
-========================
+Assignment 5 - Toolbar and navigation
+=====================================
 
-Task 5.1 - Store
+Task 5.1 - Your own Toolbar
 --------
 
-The project is growing and we need to be able to handle larger amounts of data in the frontend application. We do this
-by using what's called a **store**.
+Using the `v-app-bar` in Vuetify is all good, but we want to learn something from this course too. Therefore, we will wrap it in our own `Toolbar` component.
 
-The store holds a **state** for the application. In this first task we want to move our data into a store, and we'll see
-about changing the state of the store later.
-
-In our `List.vue` component we have hard coded `feeds()` as a list of items that we display. However, this list may
-change as items are added, changed or removed.
-
-We need to move this data into a store. In Vue.js the store is handled by Vuex. So first we need to install the `vuex`
-component using `npm` on the command line.
-
-Then you need to create a `store/index.js` in your `src` folder. It should like something like this:
+So go ahead and create the file `components/TheToolbar.vue` and fill in the template with:
 
 ```
-import Vue from 'vue';
-import Vuex from 'vuex';
-
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {}, // initial state
-});
-
-export default store;
+<template>
+  <v-app-bar app>
+    <v-toolbar-items>
+      <v-btn icon @click="onClick">
+        <v-icon>
+          mdi-home
+        </v-icon>
+      </v-btn>
+    </v-toolbar-items>
+    <v-toolbar-title>
+      {{ pageTitle }}
+    </v-toolbar-title>
+  </v-toolbar>
+</template>
 ```
 
-In the `state` object we can add things we want to be available in the store as a default. Now move the list of items
-from `List.vue` into the state here. Beware that it should not be a function like in the `data` property of the 
-components.
+> By calling it `TheToolbar` we are using a naming convention suggested in the [Official Vue Style Guide](https://vuejs.org/v2/style-guide/) telling us "that components that should only ever have a single active instance should begin with the The prefix, to denote that there can be only one."
 
-To enable have this `store/index.js` being run with the web page we need to add it to the `Vue` configuration.
+You also need to add the `onClick` function to the local `methods` object, as well as a `pageTitle` in the local `computed` object. These functions can be left empty for now.
 
-In the `main.js` file, just import the store and add it to the configuration object in `new Vue()`.
+> With Vuetify we have access to all the Material Design icons. You can browse them [here](https://materialdesignicons.com/). To use any of these icons simply use the mdi- prefix followed by the icon name, like we did above: `<v-icon>mdi-home</v-icon>`.
 
-Lastly we need to use the state in our `List.vue` object instead of the hardcoded list. Wrap the `computed` object
-with the `mapState()` function that you can import from `vuex` like this:
+> The `v-app-bar` component is a spesialization of Vuetify's `v-toolbar' made specially for being used as header navigation bar. Use `v-toolbar` instead whenever you need a "generic" toolbar (like in modals and cards).
 
-```
-import { mapState } from 'vuex'; 
-```
+> The `app` property is a magic property in Vuetify. This tells Vuetify that this component should be put where it naturally belongs in the Material Design layout. In this case, on top of the page.
 
-You can now access the state in the `computed` functions like this:
-
-```
-computed: {
-    ...mapState(['feed']),
-})
-```
-Make sure that the sorting from the previous assignment still works.
-
-Check that the web page looks exactly like it did before adding the store.
-
-
-Task 5.2 - Mutations
+Task 5.2 - Add the Toolbar to your pages
 --------
 
-Now that we have the store up and running, we want to add functionality to modify it. In Vue this is called **mutating**
-the state. In React/Redux we call them reducers, but in Vue they are called `mutations`. They are very similar.
+We have two routes in our project; `/feed` and `/`. If you haven't already changed `Home.vue` feel free to modify it to better express the intentions of your app (remember to be very pretentious otherwise your app will never be a success). Or don't and just carry on.
 
-The `mutations` are added directly to the `Vuex.Store()` configuration object and contain a map of functions, where the
-key is the name or identifier of the mutation, and the value is a function which takes the `state` and a `payload` as 
-parameters.
+You can now import and add `TheToolbar` to your app. Take a couple of minutes to browse your code and try to figure out a smart place to put it, for it to be available in all routes/views. Don't read any further just yet.
 
-```
-const store = new Vue.Store({
-    state: {}, // initial state
-    mutations: allMyMutations // imported from somewhere else
-});
-```
+That's right, it's probably smart to put it right above `<v-content>` in `App.vue`. 
 
-So a mutation function quite simply modifies the `state` with what is in the payload. It's a function so you can also 
-add a lot of magic here if you like (...but you really shouldn't.)
+You should now see a toolbar in both `/` and `/feed`.  
 
-**Beware** that you should **NOT** modify the content of the state directly, but rather replace it. For instance if you
-are adding an item to a list, you should make a new list and join the items in the old one with the new item. This can 
-be done simply like this:
-
-```
-newList = [...oldList, item];
-```
-This ["spreads"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) the old list
-and joins the items in it with the new item.
-
-Let's create our first mutation. Create the directory `src/store/mutations`. We will add in `index.js` file here to join
-all our mutations in. This will look something like this:
-
-```
-import myFirstMutations from './myFirstMutations';
-
-export default {
-    ...myFirstMutations
-}
-```
-
-`myFirstMutations` would then contain something like this:
-
-```
-export const MY_MUTATION_ID = 'MY_MUTATION_ID';
-
-export default {
-    [MY_MUTATION_ID](state, payload) {
-        state.feed = [...state.feed, payload]
-    }
-}
-```
-Of course you can add as many mutations you like here, but you should organize the mutations properly and group them by
-component or similar.
-
-Create your own mutation that adds an item the the list of feed items that you have in your state.
-Import the `mutations/index` module to the store.
-
-
-Task 5.3 - Forms
+5.3 - Add a title for each view
 --------
 
-In order to mutate the state, we need a form where the user can add new cards to the list.
-
-First we create a new Vue-component `components/feed/CreateListItem.vue`. In the `router/index.js` you will make this 
-the front page for now (i.e. create a new route with `path: '/'` and `CreateListItem` as the component)
-and change the path for the `List` component to `path: '/list'`.
-
-In the `CreateListItem` component we start by building the template. We need to build this step by step so that it is 
-understandable. The simplest of forms, which we will use as a starting point, can be something like this:
-
+Let's add a page title to each of our views. The routes in `/router/index.js` can also have a `meta` property. This can be used for whatever information we want to attach to our views.
+ 
+ Now, add a `meta` property to `/` and `/feed` that each contains an object with a property named `pageTitle`. Find some fitting display names for your views.
+ 
+Example:
 ```
-<v-form>
-    <v-text-field
-        v-model="message"
-    />
-    <v-btn
-        @click="submit"
-        color="primary"
-    >
-        {{ submitButtonText }}
-    </v-btn>
-</v-form>
-```
+...
+path: '/feed',
+meta: {
+  pageTitle: 'Picture Feed',
+},
+...
+``` 
 
-Notice that we bind the data property `message` to the the text field with `v-model` and that clicking on the button
-calls the method `submit`. We need to add a default message value and `submit()` property to our Vue component:
+Next, use the computed property that we already created in `TheToolbar` to display your page titles. 
 
-```
-export default {
-    name: 'CreateListItem',
-    data() {
-        return {
-            message: '',
-            submitButtonText: 'Publisér',
-        };
-    },
-    methods: {
-        submit() {
-            // TODO submit data
-        }
-    }
-}
-```
+Hint: You can always access the current route from within a component using `this.$route`. The returned route should have a meta object...
 
-Now use what you have learned about Vuetify using `v-container` and `v-flex` and so on to create something like this:
 
-![Assignment results](ordinary-form.png)
-
-Hint: Take a look at the [Form documentation in Vuetify](https://vuetifyjs.com/en/components/forms) to get some
-inspiration.
-
-Task 5.4 - Submitting
+Task 5.4 - Routing around
 --------
 
-So the form looks good, and we have our basic form structure in the component. Next we need to actually couple the submit
-with the mutation we create earlier.
+Our toolbar has one button, but it doesn't do anything. That's probably gonna upset your users (and your designer...), so let's fix it.
 
-We need to import `mapMutations` from `vuex` and the mutation identifier we created in task 5.2.
+In the button in our toolbar we have this attribute `@click="onClick`. The `@` is a short-hand syntax for handling events in Vue. What we are saying here, is really "at event `click` do call the `onClick` method." The click event is built into Vue, but we can also use this in the exact same way to handle arbitrarty events created by ourselves our by 3rd party components. If you want to know more, google it. 
 
-```
-import { mapMutations } from 'vuex';
-import { ADD_FEED_ITEM } from '../../store/mutations/feed';
-```
+Now add navigation to the home view (the `/` route) by clicking the button in the header. Use the `onClick` method. If you get stuck, you can consult the [Vue router docs](https://router.vuejs.org/guide/essentials/navigation.html#router-push-location-oncomplete-onabort).
 
-We use `mapMutations` for mapping our mutation(s) into our local `methods` object:
+Congratulations, we can navigate!
 
-```
-    methods: {
-        ...mapMutations([ ADD_FEED_ITEM ]),
-        submit() {
-            // TODO submit data
-        }
-    }
-```
+Task 5.5 - Just another button
+--------
 
-This create a local reference to `ADD_FEED_ITEM` in our methods object.
-Then we can call this mutation from the `submit()` function as it is available in `this`, which refers to the component
-object:
-
-```
-    methods: {
-        ...mapMutations([ ADD_FEED_ITEM ]),
-        submit() {
-            this[ADD_FEED_ITEM]({
-                id: Math.floor(Math.random() * 10000),
-                text: this.message,
-                image: this.imageUrl,
-                datetime: moment().unix(),
-            });
-        }
-    }
-```
-
-Now put all this together. You should have all you need to complete the task, but you may find that there are some
-holes that need to be filled along the way...
-
-In the end, when everything works, you can test [this in the browser](http://localhost:8080). Open the application and 
-then open your inspector in Chrome. Navigate to your Vue plugin and specifically the Vuex state:
-
-![State before update](state-before-update-only-3-items.png)
-
-Fill in the form and press your submit button and notice that the state changes:
-
-![State after update](state-after-update-now-4-items.png)
-
-You can also add a link to the list view to se the result. Just add the following somewhere in your page: 
-
-```
-<router-link :to="{name: 'List'}">See list</router-link>
-```
-
-
-> Note: It's usually (at least for larger applications) a good idea to avoid committing mutations directly from 
-components, and rather dispatch actions instead. We will revisit this topic in assignment-9.
+Great, now we can navigate back home from any view, but we still have to change the url manually to find our feed. Use what you've learned so far and add a link or a button to take the user from the landing page to the picture feed. 
 
 Bonus tasks
 ===========
 
 Bonus 5.1
 ---------
+TODO
 
-Dumb forms that accept anything is a dangerous thing, and we don't want that. We should avoid cross site scripting,
-faulty data, etc.
 
-Your task, should you choose to accept it, is to add validation to the form. There are several ways to do this. Again, 
-take a look at the [Form documentation in Vuetify](https://vuetifyjs.com/en/components/forms) to get some inspiration.
-
-I would recommend, if time permits, to try both creating your own validation as described in the link above and also 
-using third party tools like `vuelidate`.
-
-You need to add validation that the message is no longer than a max length, and that both fields are required. Feel free to
-add more validation if you see the need.
-
-![Form with validation errors](form-with-validation-errors.png)
