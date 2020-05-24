@@ -1,7 +1,7 @@
-Assignment 5 - Store it!
+Assignment 6 - Store it!
 ========================
 
-Task 5.1 - Store
+Task 6.1 - Store
 --------
 
 The project is growing and we need to be able to handle larger amounts of data in the frontend application. We do this by using what's called a **store**.
@@ -54,7 +54,7 @@ Make sure that the sorting from the previous assignment still works.
 Check that the web page looks exactly like it did before adding the store.
 
 
-Task 5.2 - Mutations
+Task 6.2 - Mutations
 --------
 
 Now that we have the store up and running, we want to add functionality to modify it. In Vue this is called **mutating** the state. In React/Redux we call them reducers, but in Vue they are called `mutations`. They are very similar.
@@ -106,7 +106,7 @@ You can add as many mutations you like here, but you should organize the mutatio
 
 Create your own mutation that adds an item the list of feed items that you have in your state. Import the `mutations/index` module to the store (`store/index.js`) and add it to the `mutations` object.
 
-Task 5.3 - Actions
+Task 6.3 - Actions
 --------
 You are free to modify the state directly from your components, but this is considered bad practice, and you **should not** do it. As your application grows, doing so will almost certainly cause trouble sooner or later. This is why we have `actions`. Trigger actions from your components, and let the actions commit the mutations.
 
@@ -117,7 +117,7 @@ Unlike mutations, actions do not take state as a parameter. Instead, they take t
 1. Create a `store/index.js` file where all actions are joined.
 1. Import `store/actions/index.js` in `store/index.js` and add it to its `actions` property.
 
-Create an action takes a new feed item and commits the mutation you created in 5.2.
+Create an action takes a new feed item and commits the mutation you created in 6.2.
 
 Example:
 ```
@@ -133,7 +133,7 @@ export default {
 ```
 > In this example we use destructuring to extract only the `commit` method from the store object passed to the action method.
 
-Task 5.4 - Forms
+Task 6.4 - Forms
 --------
 
 In order to mutate the state, we need a form where the user can add new cards to the list. First, let's make a new view to put it in.
@@ -183,7 +183,7 @@ Hint: Perhaps you can reuse some layout from `List.vue`?
 Hint: Take a look at the [Form documentation in Vuetify](https://vuetifyjs.com/en/components/forms) to get some
 inspiration.
 
-Task 5.5 - Submitting
+Task 6.5 - Submitting
 --------
 
 So the form looks good, and we have our basic form structure in the component. Next we need to actually make the submit button put a new item in our store. To do this, we will use the action we created above.
@@ -245,7 +245,7 @@ You can also add a link to the list view to se the result. Just add the followin
 Bonus tasks
 ===========
 
-Bonus 5.1
+Bonus 6.1
 ---------
 
 Dumb forms that accept anything is a dangerous thing, and we don't want that. We should avoid cross site scripting, faulty data, etc.
