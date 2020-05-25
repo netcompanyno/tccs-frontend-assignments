@@ -104,7 +104,7 @@ export default {
 ```
 You can add as many mutations you like here, but you should organize the mutations properly and group them by components or similar.
 
-Create your own mutation that adds an item the list of feed items that you have in your state. Import the `mutations/index` module to the store (`store/index.js`) and add it to the `mutations` object.
+Create your own mutation that adds an item to the list of feed items that you have in your state. Import the `mutations/index` module to the store (`store/index.js`) and add it to the `mutations` object.
 
 Task 6.3 - Actions
 --------
