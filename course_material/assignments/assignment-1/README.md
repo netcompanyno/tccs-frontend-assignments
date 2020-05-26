@@ -12,18 +12,32 @@ This assignment is all about making sure you have installed all the pre-requisit
 
 3. Install [node (includes npm)](https://nodejs.org/en/download/). Check that you have access to node and npm from the command line:
 
-```
-> node -v
-v9.11.1
-> npm -v
-5.8.0
-```
+    ```
+    > node -v
+    v12.13.0
+    > npm -v
+    6.12.0
+    ```
+    > Everything in this course has been verified to work with the versions above. Other versions (at least newer ones) will probably work too, but we can't guarantee anything. 
 
-4. Use your favorite IDE / editor and make sure it works. We recommend IntelliJ or Visual Studio Code. If you are using
-   any other IDE, then you should know how to use it yourself.
+4. Use your favorite IDE / editor and make sure it works. We recommend IntelliJ IDEA Ultimate. If you are using any other IDE, then you should know how to use it yourself... 
    * Install a vue.js plugin, if available. This will make it a lot easier to develop.
 
-5. We are using Chrome as the browser for this course. It is highly recommended to install the
-   [Vue plugin for Chrome](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
+5. We are using Chrome as the browser for this course. It is highly recommended to install the [Vue plugin for Chrome](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
 
-That's it. These are all the tools we will need today.
+6. Finally we need to install the command line tool vue-cli. Install this using npm from your terminal:
+
+    ```
+    > npm install -g @vue/cli
+    ```
+    This installs the vue-cli globally for your computer. It should not be part of your project so don't forget the -g parameter.
+   
+   Make sure your Vue CLI is properly installed and accessible with
+   
+   ```
+   > vue
+   ```
+   or
+   ```
+   > vue -V
+   ```
