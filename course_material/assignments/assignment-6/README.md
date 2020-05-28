@@ -262,3 +262,10 @@ I would recommend, if time permits, to try both creating your own validation as 
 You need to add validation that the message is no longer than a max length, and that both fields are required. Feel free to add more validation if you see the need.
 
 ![Form with validation errors](form-with-validation-errors.png)
+
+
+Bonus 6.2
+---------
+Use your tools. Vue.js DevTools is a great browser extension for debugging your application. Here you also can inspect the state, mutations, even roll the mutations back and alot more! Open the Vue.js DevTools and explore the extension. 
+
+![Vue.js DevTools](chrome-vuejs-devtools.png)
