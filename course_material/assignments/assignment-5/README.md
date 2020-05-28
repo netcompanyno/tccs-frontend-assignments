@@ -89,6 +89,7 @@ Bonus tasks
 
 Bonus 5.1
 ---------
-TODO
+Catch them all! Now that we have a couple of routes, we don't want the user to be able to go to any pages that does not exist. How about creating a "Not Found" page?
+Hint: Create the view and use [asterisk routes](https://router.vuejs.org/guide/essentials/dynamic-matching.html#catch-all-404-not-found-route).
 
 
