@@ -102,6 +102,7 @@ in your `ListItem.vue` template to finish this task.
 The result should look something like this: 
 ![Assignment results](assignment-4.png)
 
+> You can also add vue-i18n to your project by using Vue Cli. Simply write this command `vue add i18n`. Vue Cli will then ask you some questions and will generate locale messages, register the plugin automagically, and create some nice examples for you as well.
 
 Bonus tasks
 ===========
@@ -116,7 +117,7 @@ In this case is is a sorter function that looks like this:
 export default (e1, e2) => e|.datetime - e2.datetime;
 ```
 
-Import this function as you would `import` any other component and use this on the list in the `feeds` property in 
+Import this function as you would `import` any other component and use this on the list in the `feed` property in 
 `List.vue`. Hint: Make a computed property that depends on the feed in the data property.
 
 Bonus 4.2

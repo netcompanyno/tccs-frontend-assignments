@@ -74,7 +74,7 @@ Next we will use a [JavaScript function called `fetch()`](https://developer.mozi
   },
 ```
 
-In our case we interact with a server that speaks JSON. It takes JSON in and returns JSON back. This is perfect for a JavaScript frontend application as it's really easy to take a JavaScript object and turn it into a JSON string. `JSON.stringigy(feedItem)` does just that. Since we are delivering data to a REST API we need to use `POST` as the request method. It's not really relevant to the course that you understand this now if you don't.
+In our case we interact with a server that speaks JSON. It takes JSON in and returns JSON back. This is perfect for a JavaScript frontend application as it's really easy to take a JavaScript object and turn it into a JSON string. `JSON.stringigy(feedItem)` does just that. Since we are delivering data to a REST API we need to use `POST` as the request method. It's not really relevant to the course that you understand this.
 
 Remember, we said that asynchronism in Javascript are handled by using `promises`? The fetch function therefore returns a promise. This can be returned directly from our action, since actions are also asynchroneus.
  A promise has two main functions, `then()` and `catch()`, which both returns new promises (so promises can be chained). `then()` and `catch()` take callback functions as parameters. When a promise is *resolved*, the result from that can be accessed passing a callback function to `.then()`.
@@ -100,6 +100,7 @@ In order to see that we get a successful saving of the new list item, we modify 
 
 ```
 [LOAD_FEED]({ commit }) {
+  commit(TOGGLE_LOADING, true);
   return fetch(process.env.VUE_APP_FIREBASE_URL).then((response) => {
     if (response && response.ok) {
       return response.json();

@@ -8,9 +8,9 @@ The project is growing and we need to be able to handle larger amounts of data i
 
 The store holds a **state** for the application. In this first task we want to move our data into a store, and we'll see about changing the state of the store later.
 
-In our `List.vue` component we have hard coded `feed()` as a list of items that we display. However, this list may change as items are added, changed or removed.
+In our `List.vue` component we have hard coded `feed` as a list of items that we display. However, this list may change as items are added, changed or removed.
 
-We need to move this data into a store. In Vue.js the store is handled by Vuex. At this point we usually would have installed the `vuex` component by using `npm` on the command line. Luckily, we already included it when we initialized the project, so we're all good.
+We need to move this data into a store. In Vue.js the store is handled by Vuex. At this point we usually would have installed the `vuex` component by using `npm` or `vue` on the command line. Luckily, we already included it when we initialized the project, so we're all good.
 
 You should find `store/index.js` in your `src` folder. It should like something like this:
 
@@ -34,7 +34,7 @@ export default new Vuex.Store({
 
 If you take a look at your `main.js` file, you should see that this module is imported and added to your Vue instance. This is everything it takes for Vuex to be available in your application.
 
-In the `state` object we can add things we want to be available in the store as a default. Now move the list of items from `List.vue` into the state here. Beware that it should not be a function like in the `data` property of the components.
+In the `state` object we can add things we want to be available in the store as a default. Now move the list of items from `List.vue` into the state here.
 
 Lastly we need to use the state in our `List.vue` object instead of the hardcoded list. Wrap the `computed` object with the `mapState()` function that you can import from `vuex` like this:
 
@@ -49,7 +49,7 @@ computed: {
     ...mapState(['feed']),
 })
 ```
-Make sure that the sorting from the previous assignment still works.
+If you did bonus assignment 4.1, make sure that the sorting still works.
 
 Check that the web page looks exactly like it did before adding the store.
 
@@ -102,6 +102,8 @@ export default {
     }
 }
 ```
+> The mutation id in this case is really just the function name. This is a common pattern where you use constants for the mutation types. One of the advantages of this is that you can see all your mutations in the application easier. This is preferred in larger applications where there are multiple collaborators.
+
 You can add as many mutations you like here, but you should organize the mutations properly and group them by components or similar.
 
 Create your own mutation that adds an item to the list of feed items that you have in your state. Import the `mutations/index` module to the store (`store/index.js`) and add it to the `mutations` object.
@@ -132,6 +134,8 @@ export default {
 };
 ```
 > In this example we use destructuring to extract only the `commit` method from the store object passed to the action method.
+
+> Notice the same pattern as the mutations where we are using constants for the actions. This also make it easy to export and import as shown above. 
 
 Task 6.4 - Forms
 --------
@@ -191,7 +195,7 @@ So the form looks good, and we have our basic form structure in the component. N
 We need to import `mapAction` from `vuex` and the action name we created in task 6.3.
 
 ```
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import { ADD_FEED_ITEM } from '@/store/actions';
 ```
 
@@ -199,21 +203,21 @@ We use `mapActions` for mapping our action(s) into our local `methods` object:
 
 ```
 methods: {
-  ...mapActions([SUBMIT_ITEM]),
+  ...mapActions([ADD_FEED_ITEM]),
   submit() {
     // TODO submit data
   },
 },
 ```
 
-This creates a local reference to `SUBMIT_ITEM` in our methods object.
+This creates a local reference to `ADD_FEED_ITEM` in our methods object.
 Then we can call this mutation from the `submit()` function as it is available in `this`, which refers to the component object:
 
 ```
 methods: {
-  ...mapActions([SUBMIT_ITEM]),
+  ...mapActions([ADD_FEED_ITEM]),
   submit() {
-    this[SUBMIT_ITEM](
+    this[ADD_FEED_ITEM](
       {
         id: Math.floor(Math.random() * 10000),
         text: this.message,
@@ -224,8 +228,9 @@ methods: {
   },
 },
 ```
+> Remember we said actions take the whole store as the 1st parameter? That is automatically taken care of, so in the components, the first parameter will be the actual payload.
 
-Now put all this together. You should have all you need to complete the task, but you may find that there are some holes that need to be filled along the way...
+Now put all this together. You should have all you need to complete the task.
 
 In the end, when everything works, you can test [this in the browser](http://localhost:8080). Open the application and 
 then open your inspector in Chrome. Navigate to your Vue plugin and specifically the Vuex state:

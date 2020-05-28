@@ -21,8 +21,8 @@ Task 3.2
 
 Let's start by removing some stuff the CLI set up for us, so that we can start off with a clean slate. 
 
-1. Remove `<app-bar>` from `App.vue` (don't worry, we'll make a new one later). 
-2. Replace `<HelloWorld>` in `App.vue` with `<router-view/>`. This will let us controll what is displayed in this tag by utilizing our router. Remember to remove the import and component too.
+1. Remove `<app-bar>` and its content from `App.vue` (don't worry, we'll make a new one later). 
+2. Replace `<HelloWorld>` in `App.vue` with `<router-view/>`. This will let us control what is displayed in this tag by utilizing our router (more about the router in later assignments). Remember to remove the import and component too. 
 3. Create a new component named `FeedView.vue` under `views`. PS. IntelliJ can create .vue files for us. You will then get a complete "skeleton" for a Vue single-file component (SFC). Add some content to the template, for instance
     ```
     <template>
@@ -30,11 +30,11 @@ Let's start by removing some stuff the CLI set up for us, so that we can start o
     </template>
     ```
 4. Delete `About.vue` and remove its listing in `router/index.js`.
-5. In the `src/router.js` file you will find the router setup for your project. Let's add a path for our new view. Import `FeedView.vue` and add the route like this:
+5. In the `router/index.js` file you will find the router setup for your project. Let's add a path for our new view. Import `FeedView.vue` and add the route like this:
    ```
    {
        path: '/feed',
-       name: 'feed',
+       name: 'Feed',
        component: FeedView,
    },
    ```
@@ -68,6 +68,13 @@ export default {
 </script>
 ```
 
+Next, add the list to the template: 
+````
+<template>
+    <list />
+</template>
+````
+
 Task 3.4
 --------
 
@@ -77,6 +84,8 @@ The `List.vue` component will list a few cards with dummy images and text. Add t
 
 ```
 <script>
+/* eslint-disable max-len */
+
 export default {
   name: 'List',
   data() {
@@ -107,7 +116,7 @@ export default {
 </script>
 ```
 
-This will provide you with data that you can display in the template.
+This will provide you with data that you can display in the template. Note that we have disabled the eslint for max length for now. This should always be avoided, but this is only temporary, and we will be getting the data above from a server later.
 
 Then we need to create a template that displays the list. The finished page should look like this:
 ![Assignment results](assignment-3.png)
@@ -130,16 +139,16 @@ The default setup for a vuetify page is:
       </v-col>
     </v-row>
   </v-container>
-</template
+</template>
 ```
 
 To the `v-container` we add `fluid` to make the content fill the page width.
 
 Vuetify's grid layout is based on CSS' flexbox layout, which you can read more about [here](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). We often use this when creating responsive web apps. 
 
-- If we want some `v-col` elements to span 4 (out of 12) "columns" in the grid system, we can simply add the prop `cols="4"`. If we want it to change behavior based on screen size (resolution) we can use the props `{xs|sm|md|lg|xl}="[1-12]`. You can look up the different viewport breakpoints in the documentation. 
+- If we want some `v-col` elements to span 6 (out of 12) "columns" in the grid system, we can simply add the prop `cols="6"`. If we want it to change behavior based on screen size (resolution) we can use the props `{xs|sm|md|lg|xl}="[1-12]`. You can look up the different viewport breakpoints in the documentation. 
 
-- Flexbox is a single direction layout concept, which means that it always has a primary axis. This is the y-axis by default, meaning the items are layed out horizontally. In Vuetify we can specify this by setting `class="flex-column"` or `class="flex-row"` (default) on the `v-row` component. Concider which of them you need to use to achieve the layout shown in the image above. 
+- Flexbox is a single direction layout concept, which means that it always has a primary axis. This is the y-axis by default, meaning the items are layed out horizontally. In Vuetify we can specify this by setting `class="flex-column"` or `class="flex-row"` (default) on the `v-row` component. Concider which of them you need to use to achieve the layout shown in the image above. Tip: Checkout documentation for "v-for". 
 
 
 Okay... Here's our suggestion:

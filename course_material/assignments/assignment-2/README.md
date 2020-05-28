@@ -45,8 +45,8 @@ Last but not least we want to see that this project runs on our computer. The pr
 "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   }
 ```
 
@@ -89,3 +89,5 @@ The Airbnb style guide enforces a maximum line length of 100 characters. Let's i
 ...
 ```
 You can see all available rules at [https://eslint.org/docs/rules/](https://eslint.org/docs/rules/).
+
+> If you are using IntelliJ as your IDE, you might get a warning on imports saying "Module is not installed". You can fix that by adding the webpack config used in vue-cli-service as the webpack config file: Go to Settings > JavaScript > Webpack, and add <projectRoot>\node_modules\@vue\cli-service\webpack.config.js as the configuration file.

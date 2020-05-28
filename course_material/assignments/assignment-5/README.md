@@ -11,23 +11,23 @@ So go ahead and create the file `components/TheToolbar.vue` and fill in the temp
 ```
 <template>
   <v-app-bar app>
-    <v-toolbar-items>
-      <v-btn icon @click="onClick">
-        <v-icon>
-          mdi-home
-        </v-icon>
-      </v-btn>
-    </v-toolbar-items>
-    <v-toolbar-title>
-      {{ pageTitle }}
-    </v-toolbar-title>
-  </v-toolbar>
+      <v-toolbar-items>
+        <v-btn icon @click="onHomeClick">
+          <v-icon>
+            mdi-home
+          </v-icon>
+        </v-btn>
+      </v-toolbar-items>
+      <v-toolbar-title>
+        {{ pageTitle }}
+      </v-toolbar-title>
+  </v-app-bar>
 </template>
 ```
 
 > By calling it `TheToolbar` we are using a naming convention suggested in the [Official Vue Style Guide](https://vuejs.org/v2/style-guide/) telling us "that components that should only ever have a single active instance should begin with the The prefix, to denote that there can be only one."
 
-You also need to add the `onClick` function to the local `methods` object, as well as a `pageTitle` in the local `computed` object. These functions can be left empty for now.
+You also need to add the `onHomeClick` function to the local `methods` object, as well as a `pageTitle` in the local `computed` object. These functions can be left empty for now.
 
 > With Vuetify we have access to all the Material Design icons. You can browse them [here](https://materialdesignicons.com/). To use any of these icons simply use the mdi- prefix followed by the icon name, like we did above: `<v-icon>mdi-home</v-icon>`.
 
@@ -73,9 +73,9 @@ Task 5.4 - Routing around
 
 Our toolbar has one button, but it doesn't do anything. That's probably gonna upset your users (and your designer...), so let's fix it.
 
-In the button in our toolbar we have this attribute `@click="onClick`. The `@` is a short-hand syntax for handling events in Vue. What we are saying here, is really "at event `click` do call the `onClick` method." The click event is built into Vue, but we can also use this in the exact same way to handle arbitrarty events created by ourselves our by 3rd party components. If you want to know more, google it. 
+In the button in our toolbar we have this attribute `@click="onHomeClick`. The `@` is a short-hand syntax for handling events in Vue. What we are saying here, is really "at event `click` do call the `onHomeClick` method." The click event is built into Vue, but we can also use this in the exact same way to handle arbitrarty events created by ourselves our by 3rd party components. If you want to know more, google it. 
 
-Now add navigation to the home view (the `/` route) by clicking the button in the header. Use the `onClick` method. If you get stuck, you can consult the [Vue router docs](https://router.vuejs.org/guide/essentials/navigation.html#router-push-location-oncomplete-onabort).
+Now add navigation to the home view (the `/` route) by clicking the button in the header. Use the `onHomeClick` method. If you get stuck, you can consult the [Vue router docs](https://router.vuejs.org/guide/essentials/navigation.html#router-push-location-oncomplete-onabort).
 
 Congratulations, we can navigate!
 
