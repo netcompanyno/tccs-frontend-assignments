@@ -114,7 +114,7 @@ Create your own `listItemDatetimeSorter` utility in a `utils` folder inside src.
 In this case is is a sorter function that looks like this:
 
 ```
-export default (e1, e2) => e|.datetime - e2.datetime;
+export default (e1, e2) => e1.datetime - e2.datetime;
 ```
 
 Import this function as you would `import` any other component and use this on the list in the `feed` property in 
