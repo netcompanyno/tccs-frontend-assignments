@@ -116,7 +116,7 @@ Unlike mutations, actions do not take state as a parameter. Instead, they take t
 
 1. Create the directory `store/actions`
 1. Put all your actions in there.
-1. Create a `store/index.js` file where all actions are joined.
+1. Create a `store/actions/index.js` file where all actions are joined.
 1. Import `store/actions/index.js` in `store/index.js` and add it to its `actions` property.
 
 Create an action takes a new feed item and commits the mutation you created in 6.2.
