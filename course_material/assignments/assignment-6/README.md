@@ -30,7 +30,7 @@ export default new Vuex.Store({
   modules: {
   },
 ```
-> You could add your mutations, actions, modules and inital states directly in this file, but you shouldn't. For an app of some size, you will end up with a lot of each type, so for readability and scalability, it's best to put them in separate files and import them into `router/index.js` instead.
+> You could add your mutations, actions, modules and initial states directly in this file, but you shouldn't. For an app of some size, you will end up with a lot of each type, so for readability and scalability, it's best to put them in separate files and import them into `store/index.js` instead.
 
 If you take a look at your `main.js` file, you should see that this module is imported and added to your Vue instance. This is everything it takes for Vuex to be available in your application.
 
